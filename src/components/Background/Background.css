@@ -1,0 +1,17 @@
+.background {
+    height: 100vh;
+    width: 100%;
+    background-image: url('./main-background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.overlay-layer {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
