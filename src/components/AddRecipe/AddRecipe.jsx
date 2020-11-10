@@ -28,13 +28,13 @@ export default class AddRecipe extends Component {
             inputQuantity: event.target.value
         });
     }
-    
+
     inputUnitChanged = (event) => {
         this.setState({
             inpitUnit: event.target.value
         })
     }
-    
+
     inputValueChanged = (event) => {
         this.setState({
             inputValue: event.target.value
@@ -42,11 +42,16 @@ export default class AddRecipe extends Component {
     }
 
     onAddButtonClick = () => {
-        let newIngridient = { 
-                                key: Date.now(), 
-                                quantity: this.state.inputQuantity, 
-                                unit: this.state.inpitUnit, 
-                                value: this.state.inputValue };
+        if (this.state.inputQuantity.length == 0 || this.state.inputValue.length === 0) {
+            toast.warning("Please fill all ingridient fields");
+            return;
+        }
+        let newIngridient = {
+            key: Date.now(),
+            quantity: this.state.inputQuantity,
+            unit: this.state.inpitUnit,
+            value: this.state.inputValue
+        };
         this.setState({
             ingridients: this.state.ingridients.concat(newIngridient),
             inputQuantity: '',
@@ -55,6 +60,10 @@ export default class AddRecipe extends Component {
     }
 
     onSaveRecipeBtnClick = () => {
+        if (this.state.title.length == 0) {
+            toast.warning("Please fill title field");
+            return;
+        }
         this.saveRecipe();
         toast.success("The recipe saved");
         this.goToRecipeList();
@@ -73,47 +82,49 @@ export default class AddRecipe extends Component {
     }
 
     goToRecipeList() {
-        
+        this.props.history.push('/recipelist');
     }
 
     render() {
         return (
             <div className='new-recipe-container'>
-                <input
-                    type="text"
-                    placeholder='Title'
-                    onChange={this.titleChanged}
-                    value={this.state.title}></input>
-                <ul>
-                    {this.state.ingridients
-                        .map((item) =>
-                            <li key={item.key}>{item.quantity} {item.unit} {item.value}</li>)}
-                </ul>
-                <label>
-                    <input type='number'
-                        onChange={this.inputQuantityChange}
-                        value={this.state.inputQuantity}></input>
-                    <select
-                        onChange={this.inputUnitChanged}
-                        value={this.state.inpitUnit}>
-                        <option>gr</option>
-                        <option>ml</option>
-                        <option>pieces</option>
-                    </select>
+                <form>
                     <input
-                        type='text'
-                        onChange={this.inputValueChanged}
-                        value={this.state.inputValue}></input>
-                    <input
-                        type='button'
-                        value='Add'
-                        onClick={this.onAddButtonClick} />
-                </label>
-                <div>
-                    <input type='button' value='Save recipe'
-                        onClick={this.onSaveRecipeBtnClick} />
-
-                </div>
+                        type="text"
+                        placeholder='Title'
+                        onChange={this.titleChanged}
+                        value={this.state.title}
+                        ></input>
+                    <ul>
+                        {this.state.ingridients
+                            .map((item) =>
+                                <li key={item.key}>{item.quantity} {item.unit} {item.value}</li>)}
+                    </ul>
+                        <input type='number'
+                            onChange={this.inputQuantityChange}
+                            value={this.state.inputQuantity}></input>
+                        <select
+                            onChange={this.inputUnitChanged}
+                            value={this.state.inpitUnit}>
+                            <option>gr</option>
+                            <option>ml</option>
+                            <option>pieces</option>
+                        </select>
+                        <input
+                            type='text'
+                            onChange={this.inputValueChanged}
+                            value={this.state.inputValue}></input>
+                        <input
+                            type='button'
+                            value='Add'
+                            onClick={this.onAddButtonClick} />
+                    <div>
+                        <input 
+                            type='button' 
+                            value='Save recipe'
+                            onClick={this.onSaveRecipeBtnClick}/>
+                    </div>
+                </form>
             </div>
         )
     }
