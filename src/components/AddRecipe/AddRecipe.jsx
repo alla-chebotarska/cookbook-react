@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import LocalStorage from '../../servises/LocalStorage';
 
 import './AddRecipe.css';
 
@@ -10,9 +11,10 @@ export default class AddRecipe extends Component {
             title: '',
             ingridients: [{ key: Date.now(), quantity: '200', unit: 'gr', value: 'first' }],
             inputQuantity: '',
-            inpitUnit: '',
+            inpitUnit: 'gr',
             inputValue: '',
         }
+        this.localStorage = new LocalStorage();
     }
 
     titleChanged = (event) => {
@@ -59,11 +61,19 @@ export default class AddRecipe extends Component {
     }
 
     saveRecipe() {
-
+        let recipe = {
+            title: this.state.title,
+            listIngridients: this.state.ingridients
+        }
+        this.localStorage.saveRecipe(recipe);
+        this.setState({
+            title: '',
+            ingridients: [],
+        })
     }
 
     goToRecipeList() {
-        //TODO 
+        
     }
 
     render() {
