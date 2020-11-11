@@ -1,9 +1,7 @@
 .new-recipe-container{
-    width: 600px;
+    width: 700px;
     min-height: 400px;
     /* background-color: #895c47; */
     margin: 70px auto;
-    display: block;
-    padding: 36px;
-    border-radius: 15px;
+    padding: 36px 72px;
 }

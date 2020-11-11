@@ -1,0 +1,9 @@
+.recipe-list {
+    width: 700px;
+    min-height: 400px;
+    margin: 70px auto;
+}
+
+.recipe-list-title {
+    padding: 24px;
+}

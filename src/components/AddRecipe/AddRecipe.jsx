@@ -113,15 +113,15 @@ export default class AddRecipe extends Component {
                             value={this.state.title}
                         ></TextField>
                     </Grid>
+                    <Grid container item xs={12} justify="center">
+                        <Typography variant='h6' component='h6'>Ingridients</Typography>
+                    </Grid>
                     <Grid item xs={12}>
                     <ul>
                         {this.state.ingridients
                             .map((item) =>
                                 <li key={item.key}>{item.quantity} {item.unit} {item.value}</li>)}
                     </ul>
-                    </Grid>
-                    <Grid container item xs={12} justify="center">
-                        <Typography variant='h6' component='h6'>Ingridients</Typography>
                     </Grid>
                     <Grid item xs={3}>
                         <TextField
