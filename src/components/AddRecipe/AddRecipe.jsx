@@ -1,8 +1,10 @@
+import { Button, Card, Grid, IconButton, MenuItem, TextField, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import LocalStorage from '../../servises/LocalStorage';
-
 import './AddRecipe.css';
+
 
 export default class AddRecipe extends Component {
     constructor(props) {
@@ -11,8 +13,9 @@ export default class AddRecipe extends Component {
             title: '',
             ingridients: [{ key: Date.now(), quantity: '200', unit: 'gr', value: 'first' }],
             inputQuantity: '',
-            inpitUnit: 'gr',
+            inputUnit: 'gr',
             inputValue: '',
+            instruction: '',
         }
         this.localStorage = new LocalStorage();
     }
@@ -31,7 +34,7 @@ export default class AddRecipe extends Component {
 
     inputUnitChanged = (event) => {
         this.setState({
-            inpitUnit: event.target.value
+            inputUnit: event.target.value
         })
     }
 
@@ -49,7 +52,7 @@ export default class AddRecipe extends Component {
         let newIngridient = {
             key: Date.now(),
             quantity: this.state.inputQuantity,
-            unit: this.state.inpitUnit,
+            unit: this.state.inputUnit,
             value: this.state.inputValue
         };
         this.setState({
@@ -87,45 +90,87 @@ export default class AddRecipe extends Component {
 
     render() {
         return (
-            <div className='new-recipe-container'>
-                <form>
-                    <input
-                        type="text"
-                        placeholder='Title'
-                        onChange={this.titleChanged}
-                        value={this.state.title}
-                        ></input>
+            <Card className='new-recipe-container'>
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <TextField
+                            type="text"
+                            label='Recipe name'
+                            variant="outlined"
+                            fullWidth
+                            onChange={this.titleChanged}
+                            value={this.state.title}
+                        ></TextField>
+                    </Grid>
+                    <Grid item xs={12}>
                     <ul>
                         {this.state.ingridients
                             .map((item) =>
                                 <li key={item.key}>{item.quantity} {item.unit} {item.value}</li>)}
                     </ul>
-                        <input type='number'
+                    </Grid>
+                    <Grid container item xs={12} justify="center">
+                        <Typography variant='h6' component='h6'>Ingridients</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <TextField
+                            type='number'
+                            label='Amount'
                             onChange={this.inputQuantityChange}
-                            value={this.state.inputQuantity}></input>
-                        <select
+                            value={this.state.inputQuantity}>
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <TextField
+                            fullWidth
+                            label="Units"
+                            select
                             onChange={this.inputUnitChanged}
-                            value={this.state.inpitUnit}>
-                            <option>gr</option>
-                            <option>ml</option>
-                            <option>pieces</option>
-                        </select>
-                        <input
+                            value={this.state.inputUnit}>
+                            <MenuItem value='gr'>gr</MenuItem>
+                            <MenuItem value='ml'>ml</MenuItem>
+                            <MenuItem value='pieces'>pieces</MenuItem>
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            fullWidth
                             type='text'
+                            label='Value'
                             onChange={this.inputValueChanged}
-                            value={this.state.inputValue}></input>
-                        <input
-                            type='button'
-                            value='Add'
-                            onClick={this.onAddButtonClick} />
-                    <div>
-                        <input 
-                            type='button' 
-                            value='Save recipe'
-                            onClick={this.onSaveRecipeBtnClick}/>
-                    </div>
-                </form>
-            </div>
+                            value={this.state.inputValue}></TextField>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <IconButton
+                            variant="outlined"
+                            color="default"
+                            size="medium"
+                            onClick={this.onAddButtonClick}>
+                            <AddIcon />
+                        </IconButton>
+                    </Grid>
+                    <Grid container item xs={12} justify="center">
+                        <Typography variant='h6' component='h6'>Instructions</Typography>
+                    </Grid>
+                    <Grid item xs={12} >
+                        <TextField 
+                            multiline
+                            rows={4}
+                            variant='outlined'
+                            fullWidth
+                            placeholder='Create step by step instruction. Separete each step by pressing Enter.'> 
+                        </TextField>
+                    </Grid>
+                    <Grid container item xs={12}  justify="center"> 
+                    <Button
+                        variant="outlined"
+                        color="default"
+                        onClick={this.onSaveRecipeBtnClick}>
+                        Save recipe
+                    </Button>
+                    </Grid>
+                </Grid>
+            </Card>
         )
     }
 }

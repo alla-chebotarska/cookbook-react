@@ -1,6 +1,8 @@
+import { ButtonGroup } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import ListIcon from '@material-ui/icons/List';
 import React, { Component } from 'react';
-import Button from '../Button/Button';
-
 import './MainPage.css';
 
 export default class MainPage extends Component {
@@ -9,20 +11,23 @@ export default class MainPage extends Component {
     }
     render() {
         return (
-            <div>
-                <div className='button-group'>
-                    <div >
-                        <Button
-                            onClick={() => this.nextPath('/addrecipe')}>
-                            Add new recipe
-                </Button>
-                    </div>
-                    <Button
-                        onClick={() => this.nextPath('/recipelist')}>
-                        Recipe List
-                </Button>
-                </div>
-            </div>
+            <ButtonGroup className='button-group'
+                orientation="vertical"
+                color="default"
+                size="large"
+                aria-label="vertical contained primary button group"
+                variant="contained">
+                <Button
+                    endIcon={<AddIcon />}
+                    onClick={() => this.nextPath('/addrecipe')}>
+                    Add new recipe
+                    </Button>
+                <Button
+                    endIcon={<ListIcon />}
+                    onClick={() => this.nextPath('/recipelist')}>
+                    Recipe List
+                    </Button>
+            </ButtonGroup>
         )
     }
 }
