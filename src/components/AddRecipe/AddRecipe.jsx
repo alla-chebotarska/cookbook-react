@@ -44,6 +44,12 @@ export default class AddRecipe extends Component {
         });
     }
 
+    instrictionChanged = (event) => {
+        this.setState({
+            instruction: event.target.value
+        })
+    }
+
     onAddButtonClick = () => {
         if (this.state.inputQuantity.length == 0 || this.state.inputValue.length === 0) {
             toast.warning("Please fill all ingridient fields");
@@ -66,6 +72,9 @@ export default class AddRecipe extends Component {
         if (this.state.title.length == 0) {
             toast.warning("Please fill title field");
             return;
+        }else if(this.state.instruction.length == 0){
+            toast.warning("Please fill the instruction field");
+            return;
         }
         this.saveRecipe();
         toast.success("The recipe saved");
@@ -75,12 +84,14 @@ export default class AddRecipe extends Component {
     saveRecipe() {
         let recipe = {
             title: this.state.title,
-            listIngridients: this.state.ingridients
+            listIngridients: this.state.ingridients,
+            instruction: this.state.instruction,
         }
         this.localStorage.saveRecipe(recipe);
         this.setState({
             title: '',
             ingridients: [],
+            instruction: '',
         })
     }
 
@@ -158,7 +169,8 @@ export default class AddRecipe extends Component {
                             rows={4}
                             variant='outlined'
                             fullWidth
-                            placeholder='Create step by step instruction. Separete each step by pressing Enter.'> 
+                            placeholder='Create step by step instruction. Separete each step by pressing Enter.'
+                            onChange={this.instrictionChanged}> 
                         </TextField>
                     </Grid>
                     <Grid container item xs={12}  justify="center"> 
