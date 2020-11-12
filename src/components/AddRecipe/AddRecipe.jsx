@@ -2,7 +2,7 @@ import { Button, Card, Grid, IconButton, MenuItem, TextField, Typography } from 
 import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import LocalStorage from '../../servises/LocalStorage';
+import LocalStorageService from '../../servises/LocalStorageService';
 import './AddRecipe.css';
 
 
@@ -10,6 +10,7 @@ export default class AddRecipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             title: '',
             ingridients: [{ key: Date.now(), quantity: '200', unit: 'gr', value: 'first' }],
             inputQuantity: '',
@@ -17,7 +18,7 @@ export default class AddRecipe extends Component {
             inputValue: '',
             instruction: '',
         }
-        this.localStorage = new LocalStorage();
+        this.localStorage = new LocalStorageService();
     }
 
     titleChanged = (event) => {
@@ -83,12 +84,14 @@ export default class AddRecipe extends Component {
 
     saveRecipe() {
         let recipe = {
+            id: Date.now(),
             title: this.state.title,
             listIngridients: this.state.ingridients,
             instruction: this.state.instruction,
         }
         this.localStorage.saveRecipe(recipe);
         this.setState({
+            id: '',
             title: '',
             ingridients: [],
             instruction: '',
