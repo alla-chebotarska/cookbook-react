@@ -35,6 +35,11 @@ class LocalStorageService {
             return null;
         }
     }
+
+    saveAll(recipeArray){
+        let recipeJson = JSON.stringify(recipeArray);
+        localStorage.setItem(this.storageKey, recipeJson);
+    }
 }
 
 export default LocalStorageService;

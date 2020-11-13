@@ -39,6 +39,7 @@ export default class Recipe extends Component {
                                                 <ListItemText
                                                     primary={`${ingridient.quantity} ${ingridient.unit} ${ingridient.value}`}
                                                 />
+                                                
                                             </ListItem>)}
                                         <Divider />
                                     </List>

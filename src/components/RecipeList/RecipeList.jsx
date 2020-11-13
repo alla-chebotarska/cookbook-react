@@ -11,14 +11,34 @@ import './RecipeList.css';
 
 export default class RecipeList extends Component {
 
+    constructor(props){
+        super(props);
+        this.storage = new LocalStorageService();
+        this.state = {
+            recipes: this.storage.getAllRecipes(),
+        }
+    }
+
     goToRecipePage = (id) => {
         this.props.history.push(`/recipe/${id}`);
     }
 
+    deleteItem = (id) => {
+        let newRecipeArr = this.state.recipes;
+        newRecipeArr.splice(newRecipeArr.findIndex((recipe) => recipe.id === id), 1);
+        this.setState({
+            recipes: newRecipeArr,
+        });
+        this.storage.saveAll(newRecipeArr);
+    }
+
     render() {
-        let storage = new LocalStorageService();
-        let recipes = storage.getAllRecipes();
-        let items = recipes.map((recipe) => <RecipeItem key={recipe.id} onClick={() => this.goToRecipePage(recipe.id)}>{recipe.title}</RecipeItem>)
+        let items = this.state.recipes.map((recipe) => 
+            <RecipeItem key={recipe.id} 
+                onItemClick={() => this.goToRecipePage(recipe.id)}
+                onDeleteClick={() => this.deleteItem(recipe.id)}>
+                {recipe.title}
+                </RecipeItem>)
 
         return (
             <div className='recipe-list'>
@@ -39,7 +59,6 @@ export default class RecipeList extends Component {
                                     <List dense={false} fullwidth>
                                         {items.length != 0 ? items :
                                             <Typography variant="h6">
-
                                                 You don't have any recipes yet
                                             </Typography>
                                         }
