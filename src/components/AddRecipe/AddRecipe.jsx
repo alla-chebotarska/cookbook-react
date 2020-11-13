@@ -1,8 +1,9 @@
-import { Button, Card, Grid, IconButton, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Button, ButtonGroup, Card, Grid, IconButton, MenuItem, TextField, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import LocalStorageService from '../../servises/LocalStorageService';
+import LocalStorageService from '../../services/LocalStorageService';
+import nextPath from '../../services/LocationService';
 import './AddRecipe.css';
 
 
@@ -73,7 +74,7 @@ export default class AddRecipe extends Component {
         if (this.state.title.length == 0) {
             toast.warning("Please fill title field");
             return;
-        }else if(this.state.instruction.length == 0){
+        } else if (this.state.instruction.length == 0) {
             toast.warning("Please fill the instruction field");
             return;
         }
@@ -104,88 +105,96 @@ export default class AddRecipe extends Component {
 
     render() {
         return (
-            <Card className='new-recipe-container'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                        <TextField
-                            type="text"
-                            label='Recipe name'
-                            variant="outlined"
-                            fullWidth
-                            onChange={this.titleChanged}
-                            value={this.state.title}
-                        ></TextField>
-                    </Grid>
-                    <Grid container item xs={12} justify="center">
-                        <Typography variant='h6' component='h6'>Ingridients</Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                    <ul>
-                        {this.state.ingridients
-                            .map((item) =>
-                                <li key={item.key}>{item.quantity} {item.unit} {item.value}</li>)}
-                    </ul>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            type='number'
-                            label='Amount'
-                            onChange={this.inputQuantityChange}
-                            value={this.state.inputQuantity}>
-                        </TextField>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <TextField
-                            fullWidth
-                            label="Units"
-                            select
-                            onChange={this.inputUnitChanged}
-                            value={this.state.inputUnit}>
-                            <MenuItem value='gr'>gr</MenuItem>
-                            <MenuItem value='ml'>ml</MenuItem>
-                            <MenuItem value='pieces'>pieces</MenuItem>
-                        </TextField>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            type='text'
-                            label='Value'
-                            onChange={this.inputValueChanged}
-                            value={this.state.inputValue}></TextField>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <IconButton
-                            variant="outlined"
-                            color="default"
-                            size="medium"
-                            onClick={this.onAddButtonClick}>
-                            <AddIcon />
-                        </IconButton>
-                    </Grid>
-                    <Grid container item xs={12} justify="center">
-                        <Typography variant='h6' component='h6'>Instructions</Typography>
-                    </Grid>
-                    <Grid item xs={12} >
-                        <TextField 
-                            multiline
-                            rows={4}
-                            variant='outlined'
-                            fullWidth
-                            placeholder='Create step by step instruction. Separete each step by pressing Enter.'
-                            onChange={this.instrictionChanged}> 
-                        </TextField>
-                    </Grid>
-                    <Grid container item xs={12}  justify="center"> 
-                    <Button
-                        variant="outlined"
-                        color="default"
-                        onClick={this.onSaveRecipeBtnClick}>
-                        Save recipe
+            <div>
+                <Card className='new-recipe-container'>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12}>
+                            <TextField
+                                type="text"
+                                label='Recipe name'
+                                variant="outlined"
+                                fullWidth
+                                onChange={this.titleChanged}
+                                value={this.state.title}
+                            ></TextField>
+                        </Grid>
+                        <Grid container item xs={12} justify="center">
+                            <Typography variant='h6' component='h6'>Ingridients</Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <ul>
+                                {this.state.ingridients
+                                    .map((item) =>
+                                        <li key={item.key}>{item.quantity} {item.unit} {item.value}</li>)}
+                            </ul>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField
+                                type='number'
+                                label='Amount'
+                                onChange={this.inputQuantityChange}
+                                value={this.state.inputQuantity}>
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                label="Units"
+                                select
+                                onChange={this.inputUnitChanged}
+                                value={this.state.inputUnit}>
+                                <MenuItem value='gr'>gr</MenuItem>
+                                <MenuItem value='ml'>ml</MenuItem>
+                                <MenuItem value='pieces'>pieces</MenuItem>
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                type='text'
+                                label='Value'
+                                onChange={this.inputValueChanged}
+                                value={this.state.inputValue}></TextField>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <IconButton
+                                variant="outlined"
+                                color="default"
+                                size="medium"
+                                onClick={this.onAddButtonClick}>
+                                <AddIcon />
+                            </IconButton>
+                        </Grid>
+                        <Grid container item xs={12} justify="center">
+                            <Typography variant='h6' component='h6'>Instructions</Typography>
+                        </Grid>
+                        <Grid item xs={12} >
+                            <TextField
+                                multiline
+                                rows={4}
+                                variant='outlined'
+                                fullWidth
+                                placeholder='Create step by step instruction. Separete each step by pressing Enter.'
+                                onChange={this.instrictionChanged}>
+                            </TextField>
+                        </Grid>
+                        <Grid container item xs={12} justify="center">
+                            <Button
+                                variant="outlined"
+                                color="default"
+                                onClick={this.onSaveRecipeBtnClick}>
+                                Save recipe
                     </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Card>
+                </Card>
+            <div className='navigation-btn'>
+                <ButtonGroup disableElevation variant="contained" color="default" >
+                    <Button onClick={() => nextPath(this.props, '/')}>Home</Button>
+                    <Button onClick={() => nextPath(this.props, '/recipelist')}>Recipe List</Button>
+                </ButtonGroup>
+            </div>
+            </div>
         )
     }
 }

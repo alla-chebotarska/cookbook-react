@@ -1,8 +1,12 @@
 
 import { Card, Grid, List, Typography } from '@material-ui/core';
+import { ButtonGroup } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import React, { Component } from 'react';
-import LocalStorageService from '../../servises/LocalStorageService';
+import LocalStorageService from '../../services/LocalStorageService';
+import nextPath from '../../services/LocationService';
 import RecipeItem from '../RecipeItem/RecipeItem';
+import AddIcon from '@material-ui/icons/Add';
 import './RecipeList.css';
 
 export default class RecipeList extends Component {
@@ -45,6 +49,12 @@ export default class RecipeList extends Component {
                         </Grid>
                     </Grid>
                 </Card>
+                <div className='navigation-btn'>
+                <ButtonGroup disableElevation variant="contained" color="default" >
+                    <Button onClick={() => nextPath(this.props, '/')}>Home</Button>
+                    <Button onClick={() => nextPath(this.props, '/addrecipe')}>Add new recipe</Button>
+                </ButtonGroup>
+                </div>
             </div>
         )
     }
