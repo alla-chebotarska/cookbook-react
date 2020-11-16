@@ -1,12 +1,10 @@
 
-import { Card, Grid, List, Typography } from '@material-ui/core';
-import { ButtonGroup } from '@material-ui/core';
+import { ButtonGroup, Card, Grid, List, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import React, { Component } from 'react';
 import LocalStorageService from '../../services/LocalStorageService';
 import nextPath from '../../services/LocationService';
 import RecipeItem from '../RecipeItem/RecipeItem';
-import AddIcon from '@material-ui/icons/Add';
 import './RecipeList.css';
 
 export default class RecipeList extends Component {
@@ -38,7 +36,7 @@ export default class RecipeList extends Component {
                 onItemClick={() => this.goToRecipePage(recipe.id)}
                 onDeleteClick={() => this.deleteItem(recipe.id)}>
                 {recipe.title}
-                </RecipeItem>)
+            </RecipeItem>)
 
         return (
             <div className='recipe-list'>
@@ -57,7 +55,7 @@ export default class RecipeList extends Component {
                             <Grid item xs={12}>
                                 <div>
                                     <List dense={false} fullwidth>
-                                        {items.length != 0 ? items :
+                                        {items.length !== 0 ? items :
                                             <Typography variant="h6">
                                                 You don't have any recipes yet
                                             </Typography>

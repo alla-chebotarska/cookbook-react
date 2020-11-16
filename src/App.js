@@ -1,13 +1,13 @@
-import './App.css';
-import MainPage from './components/MainPage/MainPage';
-import addRecipe from './components/AddRecipe/AddRecipe';
-import Recipe from './components/Recipe/Recipe';
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
-import RecipeList from './components/RecipeList/RecipeList';
-import Background from './components/Background/Background';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Container } from '@material-ui/core';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
+import addRecipe from './components/AddRecipe/AddRecipe';
+import Background from './components/Background/Background';
+import MainPage from './components/MainPage/MainPage';
+import Recipe from './components/Recipe/Recipe';
+import RecipeList from './components/RecipeList/RecipeList';
 
 function App() {
   return (

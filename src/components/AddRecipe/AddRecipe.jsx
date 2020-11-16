@@ -1,5 +1,6 @@
-import { Button, ButtonGroup, Card, Grid, IconButton, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Button, ButtonGroup, Card, Grid, IconButton, MenuItem, List, ListItem, ListItemText,ListItemSecondaryAction, TextField, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import ClearIcon from '@material-ui/icons/Clear';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import LocalStorageService from '../../services/LocalStorageService';
@@ -52,8 +53,18 @@ export default class AddRecipe extends Component {
         })
     }
 
+    onClearClick = (key) => {
+        let newIngridientsArr = this.state.ingridients;
+        const elementToDeleteIndex = newIngridientsArr.findIndex((ingridient) => ingridient.key === key);
+        newIngridientsArr.splice(elementToDeleteIndex, 1);
+        this.setState({
+            ingridients: newIngridientsArr,
+        })
+        
+    }
+
     onAddButtonClick = () => {
-        if (this.state.inputQuantity.length == 0 || this.state.inputValue.length === 0) {
+        if (this.state.inputQuantity.length === 0 || this.state.inputValue.length === 0) {
             toast.warning("Please fill all ingridient fields");
             return;
         }
@@ -71,10 +82,10 @@ export default class AddRecipe extends Component {
     }
 
     onSaveRecipeBtnClick = () => {
-        if (this.state.title.length == 0) {
+        if (this.state.title.length === 0) {
             toast.warning("Please fill title field");
             return;
-        } else if (this.state.instruction.length == 0) {
+        } else if (this.state.instruction.length === 0) {
             toast.warning("Please fill the instruction field");
             return;
         }
@@ -122,11 +133,19 @@ export default class AddRecipe extends Component {
                             <Typography variant='h6' component='h6'>Ingridients</Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <ul>
+                            <List>
                                 {this.state.ingridients
                                     .map((item) =>
-                                        <li key={item.key}>{item.quantity} {item.unit} {item.value}</li>)}
-                            </ul>
+                                        <ListItem button key={item.key}>
+                                            <ListItemText>{item.quantity} {item.unit} {item.value}</ListItemText>
+                                            <ListItemSecondaryAction>
+                                                <IconButton edge="end" aria-label="clear"
+                                                    onClick={() => this.onClearClick(item.key)}>
+                                                    <ClearIcon />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>)}
+                            </List>
                         </Grid>
                         <Grid item xs={3}>
                             <TextField
@@ -188,12 +207,12 @@ export default class AddRecipe extends Component {
                         </Grid>
                     </Grid>
                 </Card>
-            <div className='navigation-btn'>
-                <ButtonGroup disableElevation variant="contained" color="default" >
-                    <Button onClick={() => nextPath(this.props, '/')}>Home</Button>
-                    <Button onClick={() => nextPath(this.props, '/recipelist')}>Recipe List</Button>
-                </ButtonGroup>
-            </div>
+                <div className='navigation-btn'>
+                    <ButtonGroup disableElevation variant="contained" color="default" >
+                        <Button onClick={() => nextPath(this.props, '/')}>Home</Button>
+                        <Button onClick={() => nextPath(this.props, '/recipelist')}>Recipe List</Button>
+                    </ButtonGroup>
+                </div>
             </div>
         )
     }

@@ -28,7 +28,7 @@ class LocalStorageService {
 
     getRecipeById(id) {
         let allRecipes = this.getAllRecipes();
-        let recipe = allRecipes.filter((recipe) => recipe.id == id );
+        let recipe = allRecipes.filter((recipe) => recipe.id === id );
         if(recipe.length !== 0 ){
             return recipe[0];
         }else{
