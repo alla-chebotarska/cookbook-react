@@ -14,7 +14,7 @@ export default class AddRecipe extends Component {
         this.state = {
             id: '',
             title: '',
-            ingridients: [{ key: Date.now(), quantity: '200', unit: 'gr', value: 'first' }],
+            ingridients: [],
             inputQuantity: '',
             inputUnit: 'gr',
             inputValue: '',
